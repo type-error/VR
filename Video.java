@@ -55,19 +55,19 @@ public class Video {
 		this.rented = rented;
 	}
 
-	public Date getRegisteredDate() {
-		return registeredDate;
-	}
+	//public Date getRegisteredDate() {
+	//	return registeredDate;
+	//}
 
-	public void setRegisteredDate(Date registeredDate) {
-		this.registeredDate = registeredDate;
-	}
+	//public void setRegisteredDate(Date registeredDate) {
+	//	this.registeredDate = registeredDate;
+	//}
 
 	public int getVideoType() {
 		return videoType;
 	}
 
-	public void setVideoType(int videoType) {
-		this.videoType = videoType;
-	}
+	//public void setVideoType(int videoType) {
+	//	this.videoType = videoType;
+	//}
 }
