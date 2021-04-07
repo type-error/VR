@@ -37,6 +37,7 @@ public class VRUI {
 		System.out.println("Enter customer name: ") ;
 		String customerName = scanner.next() ;
 
+		////////////////foundCustomer 반복
 		Customer foundCustomer = null ;
 		for ( Customer customer: customers ) {
 			if ( customer.getName().equals(customerName)) {
@@ -50,20 +51,27 @@ public class VRUI {
 		} else {
 			System.out.println("Name: " + foundCustomer.getName() +
 					"\tRentals: " + foundCustomer.getRentals().size()) ;
+			
 			for ( Rental rental: foundCustomer.getRentals() ) {
 				System.out.print("\tTitle: " + rental.getVideo().getTitle() + " ") ;
 				System.out.print("\tPrice Code: " + rental.getVideo().getPriceCode()) ;
 			}
-
-			List<Rental> rentals = new ArrayList<Rental>() ;
-			foundCustomer.setRentals(rentals);
+			////여기를 foundCustomer를 넘겨주고 setRentals로 controller에서?
+			////List<Rental> rentals = new ArrayList<Rental>() ;
+			////foundCustomer.setRentals(rentals);
+			////
 		}
 	}
 
 	public void returnVideo() {
 		System.out.println("Enter customer name: ") ;
 		String customerName = scanner.next() ;
-
+		
+		////위치변경함
+		System.out.println("Enter video title to return: ") ;
+		String videoTitle = scanner.next() ;
+		
+		////////////////foundCustomer 반복
 		Customer foundCustomer = null ;
 		for ( Customer customer: customers ) {
 			if ( customer.getName().equals(customerName)) {
@@ -72,10 +80,8 @@ public class VRUI {
 			}
 		}
 		if ( foundCustomer == null ) return ;
-
-		System.out.println("Enter video title to return: ") ;
-		String videoTitle = scanner.next() ;
-
+		
+		//////////////여기도 controller로?
 		List<Rental> customerRentals = foundCustomer.getRentals() ;
 		for ( Rental rental: customerRentals ) {
 			if ( rental.getVideo().getTitle().equals(videoTitle) && rental.getVideo().isRented() ) {
@@ -84,6 +90,7 @@ public class VRUI {
 				break ;
 			}
 		}
+		////
 	}
 
 	private void init() {
@@ -130,6 +137,7 @@ public class VRUI {
 		System.out.println("Enter customer name: ") ;
 		String customerName = scanner.next() ;
 
+		////////////////foundCustomer 반복
 		Customer foundCustomer = null ;
 		for ( Customer customer: customers ) {
 			if ( customer.getName().equals(customerName)) {
@@ -150,6 +158,7 @@ public class VRUI {
 		System.out.println("Enter customer name: ") ;
 		String customerName = scanner.next() ;
 
+		////////////////foundCustomer 반복
 		Customer foundCustomer = null ;
 		for ( Customer customer: customers ) {
 			if ( customer.getName().equals(customerName)) {
@@ -163,6 +172,7 @@ public class VRUI {
 		System.out.println("Enter video title to rent: ") ;
 		String videoTitle = scanner.next() ;
 
+		///////////video rent하는 부분 controller로
 		Video foundVideo = null ;
 		for ( Video video: videos ) {
 			if ( video.getTitle().equals(videoTitle) && video.isRented() == false ) {
@@ -179,6 +189,7 @@ public class VRUI {
 		List<Rental> customerRentals = foundCustomer.getRentals() ;
 		customerRentals.add(rental);
 		foundCustomer.setRentals(customerRentals);
+		
 	}
 
 	public void register(String object) {
