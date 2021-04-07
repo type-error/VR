@@ -209,6 +209,7 @@ public class VRUI {
 			System.out.println("Enter price code( 1 for Regular, 2 for New Release ):") ;
 			int priceCode = scanner.nextInt();
 
+			//register도 controller로?
 			Date registeredDate = new Date();
 			Video video = new Video(title, videoType, priceCode, registeredDate) ;
 			videos.add(video) ;
