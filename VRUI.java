@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 
 public class VRUI {
@@ -79,7 +77,7 @@ public class VRUI {
 	private void init() {
 		vrController.addCustomer("James");
 		vrController.addCustomer("Brown");
-		
+
 		vrController.addVideo("v1", Video.CD, Video.REGULAR);
 		vrController.addVideo("v2", Video.DVD, Video.NEW_RELEASE);
 
