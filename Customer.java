@@ -1,5 +1,3 @@
-package video;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,11 +29,27 @@ public class Customer {
 
 	public void addRental(Rental rental) {
 		rentals.add(rental);
+	}
 
+	public void showMessage(int totalPoint) {
+		if ( totalPoint >= 10 ) {
+			System.out.println("Congrat! You earned one free coupon");
+		}
+
+		if ( totalPoint >= 30 ) {
+			System.out.println("Congrat! You earned two free coupon");
+		}
+	}
+
+	private double discountCharge(int daysRented) {
+		return (daysRented - 2) * 1.5;
 	}
 
 	public String getReport() {
-		String result = "Customer Report for " + getName() + "\n";
+		String name = getName(); // Extract Variable
+
+		String result = "Customer Report for " + name + "\n";
+//		String result = "Customer Report for " + getName() + "\n";
 
 		List<Rental> rentals = getRentals();
 
@@ -43,23 +57,36 @@ public class Customer {
 		int totalPoint = 0;
 
 		for (Rental each : rentals) {
+			Video video = each.getVideo(); // Extract Variable
+
 			double eachCharge = 0;
 			int eachPoint = 0 ;
 			int daysRented = 0;
+			long diff = 0;
 
 			if (each.getStatus() == 1) { // returned Video
-				long diff = each.getReturnDate().getTime() - each.getRentDate().getTime();
-				daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
+				Date returnDate = each.getReturnDate(); // Extract Variable
+				Date rentDate = each.getRentDate(); // Extract Variable
+
+				diff = returnDate.getTime() - rentDate.getTime();
+
+//				daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
+
 			} else { // not yet returned
-				long diff = new Date().getTime() - each.getRentDate().getTime();
-				daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
+				diff = new Date().getTime() - each.getRentDate().getTime();
+
+//				daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1;
 			}
 
-			switch (each.getVideo().getPriceCode()) {
+			daysRented = (int) (diff / (1000 * 60 * 60 * 24)) + 1; // Duplicated Code
+
+			// switch (each.getVideo().getPriceCode()) {
+			switch (video.getPriceCode()) {
 			case Video.REGULAR:
 				eachCharge += 2;
 				if (daysRented > 2)
-					eachCharge += (daysRented - 2) * 1.5;
+					eachCharge += discountCharge(daysRented); // Decompose Conditional
+//					eachCharge += (daysRented - 2) * 1.5;
 				break;
 			case Video.NEW_RELEASE:
 				eachCharge = daysRented * 3;
@@ -68,14 +95,14 @@ public class Customer {
 
 			eachPoint++;
 
-			if ((each.getVideo().getPriceCode() == Video.NEW_RELEASE) )
+			if ((video.getPriceCode() == Video.NEW_RELEASE) ) // 재선언한 변수 참조
 				eachPoint++;
 
 			if ( daysRented > each.getDaysRentedLimit() )
-				eachPoint -= Math.min(eachPoint, each.getVideo().getLateReturnPointPenalty()) ;
+				eachPoint -= Math.min(eachPoint, video.getLateReturnPointPenalty()) ;
 
-			result += "\t" + each.getVideo().getTitle() + "\tDays rented: " + daysRented + "\tCharge: " + eachCharge
-					+ "\tPoint: " + eachPoint + "\n";
+			result += "\t" + video.getTitle() + "\tDays rented: " + daysRented + "\tCharge: " + eachCharge
+					+ "\tPoint: " + eachPoint + "\n"; // 재선언한 변수 참조
 
 			totalCharge += eachCharge;
 
@@ -84,13 +111,15 @@ public class Customer {
 
 		result += "Total charge: " + totalCharge + "\tTotal Point:" + totalPoint + "\n";
 
+		showMessage(totalPoint); // Extract Method
 
-		if ( totalPoint >= 10 ) {
-			System.out.println("Congrat! You earned one free coupon");
-		}
-		if ( totalPoint >= 30 ) {
-			System.out.println("Congrat! You earned two free coupon");
-		}
+//		if ( totalPoint >= 10 ) {
+//			System.out.println("Congrat! You earned one free coupon");
+//		}
+//		if ( totalPoint >= 30 ) {
+//			System.out.println("Congrat! You earned two free coupon");
+//		}
+
 		return result ;
 	}
 }
